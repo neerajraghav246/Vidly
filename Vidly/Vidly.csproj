@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201806060402084_SeedGeneres.Designer.cs">
       <DependentUpon>201806060402084_SeedGeneres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806121703451_AddNullableToReleaseDate.cs" />
+    <Compile Include="Migrations\201806121703451_AddNullableToReleaseDate.Designer.cs">
+      <DependentUpon>201806121703451_AddNullableToReleaseDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -420,6 +424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806060402084_SeedGeneres.resx">
       <DependentUpon>201806060402084_SeedGeneres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121703451_AddNullableToReleaseDate.resx">
+      <DependentUpon>201806121703451_AddNullableToReleaseDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

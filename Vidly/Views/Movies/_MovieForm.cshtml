@@ -6,7 +6,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(m=>m.movie.ReleaseDate)
-    @Html.TextBoxFor(m=>m.movie.ReleaseDate,"{0:dd MMM yyyy}",new { @class="form-control"})
+    @Html.TextBoxFor(m=>m.movie.ReleaseDate,"{0:yyyy-MM-dd}",new { @class="form-control",@type="date"})
 
 </div>
 <div class="form-group">
