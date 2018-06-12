@@ -1,0 +1,29 @@
+﻿@model Vidly.Models.Customer
+
+@{
+    ViewBag.Title = "Customer";
+}
+
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <h5>
+        @Html.DisplayFor(model => model.Name)
+    </h5>
+    <ul>
+        <li>
+            Membership : @Html.DisplayFor(model => model.AssociatedMembershipType.Name)
+        </li>
+        @if (Model.Birthdate.HasValue)
+        {
+            <li>
+                @Html.DisplayNameFor(model => model.Birthdate) : @Html.DisplayFor(model => model.Birthdate)
+            </li>
+        }
+    </ul>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

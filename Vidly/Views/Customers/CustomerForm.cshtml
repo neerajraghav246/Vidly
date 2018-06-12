@@ -1,0 +1,14 @@
+﻿@model Vidly.ViewModels.CustomerViewModel
+
+@{
+    ViewBag.Title = "Customer Form";
+}
+
+<h2>Customer Form</h2>
+
+@using (Html.BeginForm("Save","Customers"))
+{
+    @Html.Partial("_CustomerForm")
+    @Html.HiddenFor(m=> m.customer.Id)
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+}

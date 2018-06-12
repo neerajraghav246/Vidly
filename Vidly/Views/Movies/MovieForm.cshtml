@@ -1,0 +1,15 @@
+﻿@model Vidly.ViewModels.MovieViewModel
+
+   @{
+       ViewBag.Title = "Movie Form";
+    }
+
+<h2>Movie Form</h2>
+@using (Html.BeginForm("Save", "Movies"))
+    {
+    @Html.Partial("_MovieForm")
+    @Html.HiddenFor(m=>m.movie.Id)
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+    }
+
+
