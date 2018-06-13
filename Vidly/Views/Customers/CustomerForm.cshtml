@@ -6,9 +6,15 @@
 
 <h2>Customer Form</h2>
 
-@using (Html.BeginForm("Save","Customers"))
+@using (Html.BeginForm("Save", "Customers"))
 {
+    @Html.AntiForgeryToken()
     @Html.Partial("_CustomerForm")
-    @Html.HiddenFor(m=> m.customer.Id)
+    @Html.HiddenFor(m => m.customer.Id)
     <button type="submit" class="btn btn-outline-primary">Save</button>
 }
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

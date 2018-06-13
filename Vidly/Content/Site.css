@@ -25,3 +25,9 @@ textarea {
 .popular {
     background-color: antiquewhite;
 }
+.field-validation-error, .validation-summary-errors {
+    color: red;
+}
+.input-validation-error{
+    border:solid thin red;
+}

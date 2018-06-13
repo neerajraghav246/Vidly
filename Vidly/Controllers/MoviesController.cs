@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace Vidly.Controllers
 {
@@ -55,9 +56,9 @@ namespace Vidly.Controllers
             {
                 _context.SaveChanges();
             }
-            catch (Exception)
+            catch (DbEntityValidationException ex)
             {
-
+               var s= ex.Message;
                 throw;
             }
             return RedirectToAction("Index");
