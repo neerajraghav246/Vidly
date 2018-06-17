@@ -29,14 +29,25 @@ namespace Vidly.Controllers
         public ActionResult Create()
         {
             return View(
-                        "MovieForm", new MovieViewModel
+                        "MovieForm", new MovieFormViewModel
                         {
                             generes = _context.Generes
                         });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(
+                       "MovieForm", new MovieFormViewModel
+                       {
+                           generes = _context.Generes,
+                           movie=movie
+                       });
+            }
             if (movie.Id == 0)
             {
                 _context.Movies.Add(movie);
@@ -74,7 +85,7 @@ namespace Vidly.Controllers
                 return HttpNotFound();
             }
             return View(
-                "MovieForm" ,new MovieViewModel
+                "MovieForm" ,new MovieFormViewModel
                 {
                     movie=movie,
                     generes=_context.Generes

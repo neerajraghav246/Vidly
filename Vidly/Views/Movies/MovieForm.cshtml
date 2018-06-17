@@ -1,15 +1,21 @@
-﻿@model Vidly.ViewModels.MovieViewModel
+﻿@model Vidly.ViewModels.MovieFormViewModel
 
    @{
-       ViewBag.Title = "Movie Form";
+       ViewBag.Title = Model.FormTitle;
     }
 
 <h2>Movie Form</h2>
 @using (Html.BeginForm("Save", "Movies"))
     {
+    @Html.AntiForgeryToken()
     @Html.Partial("_MovieForm")
     @Html.HiddenFor(m=>m.movie.Id)
     <button type="submit" class="btn btn-outline-primary">Save</button>
     }
+
+@section scripts
+{
+ @Scripts.Render("~/bundles/jqueryval")    
+}
 
 

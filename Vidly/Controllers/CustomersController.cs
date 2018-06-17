@@ -46,7 +46,7 @@ namespace Vidly.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            return View("CustomerForm", new CustomerViewModel
+            return View("CustomerForm", new CustomerFormViewModel
             {
                 customer=new Customer(),
                 membershipTypes = _context.MembershipTypes
@@ -60,7 +60,7 @@ namespace Vidly.Controllers
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
             if (customer == null)
                 return HttpNotFound();
-            return View("CustomerForm", new CustomerViewModel
+            return View("CustomerForm", new CustomerFormViewModel
             {
                 membershipTypes = _context.MembershipTypes,
                 customer = customer
@@ -74,7 +74,7 @@ namespace Vidly.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("CustomerForm", new CustomerViewModel
+                return View("CustomerForm", new CustomerFormViewModel
                 {
                     membershipTypes = _context.MembershipTypes,
                     customer = customer
@@ -104,7 +104,7 @@ namespace Vidly.Controllers
             }
             catch
             {
-                return View("CustomerForm", new CustomerViewModel
+                return View("CustomerForm", new CustomerFormViewModel
                 {
                     membershipTypes = _context.MembershipTypes,
                     customer = customer
