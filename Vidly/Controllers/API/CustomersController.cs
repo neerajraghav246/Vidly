@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Vidly.DTO;
 using Vidly.Models;
 
 namespace Vidly.Controllers.API
@@ -16,42 +17,41 @@ namespace Vidly.Controllers.API
         {
             _context = new ApplicationDbContext();
         }
-        public IEnumerable<Customer> GetCustomers()
+        public IHttpActionResult Customers => Ok(_context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>));
+
+        public IHttpActionResult GetCustomer(int id)
         {
-            return _context.Customers;
-        }
-        
-        public Customer GetCustomer(int id)
-        {
-            var _customer= _context.Customers.SingleOrDefault(c => c.Id == id);
+            var _customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (_customer == null)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    Content=new StringContent($"No Employee found with id={id}"),
-                    ReasonPhrase= "Customer Not Found"
+                    Content = new StringContent($"No Employee found with id={id}"),
+                    ReasonPhrase = "Customer Not Found"
                 };
                 throw new HttpResponseException(response);
             }
-            return _customer;
+            return Ok(Mapper.Map<Customer, CustomerDto>(_customer));
         }
 
         [HttpPost]
-        public Customer CreateCustomer(Customer customer)
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    Content = new StringContent($"Customer with Name={customer.Name} has invalid data"),
+                    Content = new StringContent($"Customer with Name={customerDto.Name} has invalid data"),
                     ReasonPhrase = "Invalid Customer data"
                 };
                 throw new HttpResponseException(response);
             }
             try
             {
+                var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
+                customerDto.Id = customer.Id;
             }
             catch (Exception ex)
             {
@@ -62,11 +62,11 @@ namespace Vidly.Controllers.API
                 };
                 throw new HttpResponseException(response);
             }
-            return customer;
+            return Created(Request.RequestUri + "/" + customerDto.Id, customerDto);
         }
 
         [HttpPut]
-        public Customer UpdateCustomer(int id,Customer customer)
+        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -77,29 +77,31 @@ namespace Vidly.Controllers.API
                 };
                 throw new HttpResponseException(response);
             }
-           
-                var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
-                if (customerInDB == null)
+
+            var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customerInDB == null)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
-                    {
-                        Content = new StringContent($"Customer not found with ID={id} in our database"),
-                        ReasonPhrase = "Customer Not Found",
-                        
-                    };
-                    //response.Headers.Add("ContentType", "application/json");
-                    throw new HttpResponseException(response);
-                }
+                    Content = new StringContent($"Customer not found with ID={id} in our database"),
+                    ReasonPhrase = "Customer Not Found",
+
+                };
+                //response.Headers.Add("ContentType", "application/json");
+                throw new HttpResponseException(response);
+            }
             try
             {
-                var config = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<Customer, Customer> ().ForMember(src=>src.Id,opt=>opt.Ignore());
+
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<Customer, Customer>().ForMember(src => src.Id, opt => opt.Ignore());
                 });
 
                 IMapper mapper = config.CreateMapper();
-                mapper.Map(customer, customerInDB);
+                mapper.Map(customerDto, customerInDB);
                 _context.SaveChanges();
-                return customer;
+                return Ok(customerDto);
             }
             catch (Exception ex)
             {
@@ -113,7 +115,7 @@ namespace Vidly.Controllers.API
         }
 
         [HttpDelete]
-        public bool DeleteCustomer(int id)
+        public IHttpActionResult DeleteCustomer(int id)
         {
             try
             {
@@ -128,9 +130,9 @@ namespace Vidly.Controllers.API
                     throw new HttpResponseException(response);
                 }
 
-               _context.Customers.Remove(customerInDB);
+                _context.Customers.Remove(customerInDB);
                 _context.SaveChanges();
-                return true;
+                return Ok(true);
             }
             catch (Exception ex)
             {
