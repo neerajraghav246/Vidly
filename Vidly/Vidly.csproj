@@ -215,11 +215,13 @@
     <Compile Include="Constants\MembershipConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CustomersController.cs" />
+    <Compile Include="Controllers\API\MoviesController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="DTO\CustomerDto.cs" />
+    <Compile Include="DTO\MovieDto.cs" />
     <Compile Include="Exceptions\GlobalExceptionHandler.cs" />
     <Compile Include="Exceptions\ExceptionManager.cs" />
     <Compile Include="Global.asax.cs">
@@ -364,7 +366,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

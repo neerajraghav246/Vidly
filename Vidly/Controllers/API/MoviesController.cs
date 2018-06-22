@@ -10,41 +10,42 @@ using Vidly.Models;
 
 namespace Vidly.Controllers.API
 {
-    public class CustomersController : ApiController
+    public class MoviesController : ApiController
     {
         private ApplicationDbContext _context;
-        public CustomersController()
+        public MoviesController()
         {
             _context = new ApplicationDbContext();
         }
-        public IHttpActionResult Customers => Ok(_context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>));
 
-        public IHttpActionResult GetCustomer(int id)
+        public IHttpActionResult GetMovies() => Ok(_context.Movies.ToList().Select(Mapper.Map<Movie, MovieDto>));
+
+        public IHttpActionResult GetMovie(int id)
         {
-            var _customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (_customer == null)
+            var _movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            if (_movie == null)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    Content = new StringContent($"No Employee found with id={id}"),
-                    ReasonPhrase = "Customer Not Found"
+                    Content = new StringContent($"No Movie found with id={id}"),
+                    ReasonPhrase = "Movie Not Found"
                 };
 
                 throw new HttpResponseException(response);
                 // throw new Exception("Error");
             }
-            return Ok(Mapper.Map<Customer, CustomerDto>(_customer));
+            return Ok(Mapper.Map<Movie, MovieDto>(_movie));
         }
 
         [HttpPost]
-        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
+        public IHttpActionResult CreateMovie(MovieDto movieDto)
         {
             if (!ModelState.IsValid)
             {
-                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
-                    Content = new StringContent($"Customer with Name={customerDto.Name} has invalid data"),
-                    ReasonPhrase = "Invalid Customer data"
+                    Content = new StringContent($"Movie with Name={movieDto.Name} has invalid data", System.Text.Encoding.UTF8, "text/plain"),
+                    ReasonPhrase = "Invalid Movie data"
                 };
                 HttpResponseException responseException = new HttpResponseException(response);
                 ModelState.AddModelError("ErrorMessage", responseException);
@@ -52,46 +53,46 @@ namespace Vidly.Controllers.API
             }
             try
             {
-                var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
-                _context.Customers.Add(customer);
+                var movie = Mapper.Map<MovieDto, Movie>(movieDto);
+                _context.Movies.Add(movie);
                 _context.SaveChanges();
-                customerDto.Id = customer.Id;
+                movieDto.Id = movie.Id;
             }
             catch (Exception ex)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
-                    Content = new StringContent($"Error while saving customer.Error Message: {ex.Message}"),
+                    Content = new StringContent($"Error while saving movie.Error Message: {ex.Message}"),
                     ReasonPhrase = "Unexpected error occured"
                 };
                 throw new HttpResponseException(response);
             }
-            return Created(Request.RequestUri + "/" + customerDto.Id, customerDto);
+            return Created(Request.RequestUri + "/" + movieDto.Id, movieDto);
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
+
+        public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
         {
             if (!ModelState.IsValid)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
-                    Content = new StringContent($"Customer with ID={id} has invalid data", System.Text.Encoding.UTF8, "text/plain"),
-                    ReasonPhrase = "Invalid Customer data"
+                    Content = new StringContent($"Movie with ID={id} has invalid data", System.Text.Encoding.UTF8, "text/plain"),
+                    ReasonPhrase = "Invalid Movie data"
                 };
                 throw new HttpResponseException(response);
             }
 
-            var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customerInDB == null)
+            var movieInDb = _context.Movies.SingleOrDefault(c => c.Id == id);
+            if (movieInDb == null)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    Content = new StringContent($"Customer not found with ID={id} in our database", System.Text.Encoding.UTF8, "text/plain"),
-                    ReasonPhrase = "Customer Not Found",
+                    Content = new StringContent($"Movie not found with ID={id} in our database", System.Text.Encoding.UTF8, "text/plain"),
+                    ReasonPhrase = "Movie Not Found",
 
                 };
-                //response.Headers.Add("ContentType", "application/json");
                 throw new HttpResponseException(response);
             }
             try
@@ -99,13 +100,13 @@ namespace Vidly.Controllers.API
 
                 //var config = new MapperConfiguration(cfg =>
                 //{
-                //    cfg.CreateMap<Customer, Customer>().ForMember(src => src.Id, opt => opt.Ignore());
+                //    cfg.CreateMap<MovieDto, Movie>().ForMember(src => src.Id, opt => opt.Ignore());
                 //});
 
                 //IMapper mapper = config.CreateMapper();
-                Mapper.Map(customerDto, customerInDB);
+                Mapper.Map(movieDto, movieInDb);
                 _context.SaveChanges();
-                return Ok(customerDto);
+                return Ok(movieDto);
             }
             catch (Exception ex)
             {
@@ -119,22 +120,22 @@ namespace Vidly.Controllers.API
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteCustomer(int id)
+        public IHttpActionResult DeleteMovie(int id)
         {
            
-                var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
-                if (customerInDB == null)
+                var movieInDB = _context.Movies.SingleOrDefault(c => c.Id == id);
+                if (movieInDB == null)
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                     {
-                        Content = new StringContent($"Customer not found with ID={id} in our database"),
-                        ReasonPhrase = "Customer Not Found"
+                        Content = new StringContent($"Movie not found with ID={id} in our database"),
+                        ReasonPhrase = "Movie Not Found"
                     };
                     throw new HttpResponseException(response);
                 }
             try
             {
-                _context.Customers.Remove(customerInDB);
+                _context.Movies.Remove(movieInDB);
                 _context.SaveChanges();
                 return Ok(true);
             }
@@ -142,12 +143,11 @@ namespace Vidly.Controllers.API
             {
                 var response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
-                    Content = new StringContent($"Error while deleting customer with ID={id}.Error Message: {ex.Message}"),
+                    Content = new StringContent($"Error while deleting movie with ID={id}.Error Message: {ex.Message}"),
                     ReasonPhrase = "Unexpected error occured"
                 };
                 throw new HttpResponseException(response);
             }
         }
-
     }
 }

@@ -11,10 +11,9 @@ namespace Vidly
     {
         public static void Register(HttpConfiguration config)
         {
-            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
-            config.Services.Add(typeof(IExceptionLogger), new ExceptionManager());
-          
             config.MapHttpAttributeRoutes();
+            config.Services.Add(typeof(IExceptionLogger), new ExceptionManager());
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -12,19 +12,26 @@ using Vidly.Models;
 
 namespace Vidly.Exceptions
 {
-    public class ExceptionManager: ExceptionLogger
+    public class ExceptionManager : ExceptionLogger
     {
-        public override Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
+        public override void Log(ExceptionLoggerContext context)
         {
-            var log = context.Exception.ToString();
+            var log = $"Method : {context.Request.Method}, Uri: {context.Request.RequestUri}, Exception : {context.Exception.ToString()}";
             var _context = new ApplicationDbContext();
             _context.ExceptionLogs.Add(new ExceptionLog { Message = log });
             _context.SaveChangesAsync();
-            return base.LogAsync(context, cancellationToken);
         }
+        //public override Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
+        //{
+        //    var log = context.Exception.ToString();
+        //    var _context = new ApplicationDbContext();
+        //    _context.ExceptionLogs.Add(new ExceptionLog { Message = log });
+        //    _context.SaveChangesAsync();
+        //    return base.LogAsync(context, cancellationToken);
+        //}
         public override bool ShouldLog(ExceptionLoggerContext context)
         {
-            return true; 
+            return true;
         }
         //public override Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
         //{
