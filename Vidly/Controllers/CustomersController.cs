@@ -28,7 +28,7 @@ namespace Vidly.Controllers
 
 
             var viewResult = new ViewResult();
-            viewResult.ViewData.Model = _context.Customers.Include(x => x.AssociatedMembershipType);
+           // viewResult.ViewData.Model = _context.Customers.Include(x => x.AssociatedMembershipType);
             return viewResult;
         }
 

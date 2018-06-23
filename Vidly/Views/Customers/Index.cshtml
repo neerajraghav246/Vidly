@@ -7,37 +7,37 @@
 <h2 class="mt-4">Customers</h2>
 
 
-@Html.ActionLink("Create New","Create",null,new { @class= "btn btn-info" })
-@if (Model.Count()==0)
+@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-info mb-4" })
+@*@if (!Model.Any())
 {
     <text> We don't have any customer</text>
 }
 else
+{*@
+    <table id="customers" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Membership Type
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    @Html.Partial("_ConfirmModal")
+
+@*}*@
+@section scripts
 {
-<table class="table table-bordered">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            Membership Type
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-    <tr>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Name)*@
-            @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AssociatedMembershipType.Name)
-        </td>
-    </tr>
-    }
-
-</table>
-
+    <script src="~/Scripts/app/main.js"></script>
+    <script src="~/Scripts/app/customer_index.js"></script>
 }
-
