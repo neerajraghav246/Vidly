@@ -10,7 +10,7 @@
 </head>
 <body>
     @Html.Partial("_Navbar")
-   
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -18,8 +18,9 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
+    @Html.Partial("_ConfirmModal")
     @Scripts.Render("~/bundles/jquery_bootstrap_datatable")
+    <script src="~/Scripts/app/main.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

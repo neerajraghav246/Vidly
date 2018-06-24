@@ -8,12 +8,7 @@
 
 
 @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-info mb-4" })
-@*@if (!Model.Any())
-{
-    <text> We don't have any customer</text>
-}
-else
-{*@
+
     <table id="customers" class="table table-bordered">
         <thead>
             <tr>
@@ -33,11 +28,8 @@ else
         </tbody>
     </table>
 
-    @Html.Partial("_ConfirmModal")
-
-@*}*@
 @section scripts
 {
-    <script src="~/Scripts/app/main.js"></script>
+    
     <script src="~/Scripts/app/customer_index.js"></script>
 }

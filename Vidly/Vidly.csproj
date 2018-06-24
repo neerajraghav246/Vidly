@@ -221,6 +221,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="DTO\CustomerDto.cs" />
+    <Compile Include="DTO\GenereDto.cs" />
     <Compile Include="DTO\MembershipTypeDto.cs" />
     <Compile Include="DTO\MovieDto.cs" />
     <Compile Include="Exceptions\GlobalExceptionHandler.cs" />
@@ -287,6 +288,10 @@
     <Compile Include="Migrations\201806161024328_AddExceptionClassToDB.cs" />
     <Compile Include="Migrations\201806161024328_AddExceptionClassToDB.Designer.cs">
       <DependentUpon>201806161024328_AddExceptionClassToDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806241542313_SeedUsers.cs" />
+    <Compile Include="Migrations\201806241542313_SeedUsers.Designer.cs">
+      <DependentUpon>201806241542313_SeedUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -480,6 +485,7 @@
     </Content>
     <Content Include="Scripts\app\customer_index.js" />
     <Content Include="Scripts\app\main.js" />
+    <Content Include="Scripts\app\movie_index.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -721,6 +727,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806161024328_AddExceptionClassToDB.resx">
       <DependentUpon>201806161024328_AddExceptionClassToDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806241542313_SeedUsers.resx">
+      <DependentUpon>201806241542313_SeedUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

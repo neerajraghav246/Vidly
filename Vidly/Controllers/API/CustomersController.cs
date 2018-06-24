@@ -19,15 +19,11 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [HttpGet]
-        public IHttpActionResult Customers()
-        {
-                return Ok(_context.Customers
-                            .Include(c=>c.AssociatedMembershipType)
+       // [HttpGet]
+        public IHttpActionResult GetCustomers() => Ok(_context.Customers
+                            .Include(c => c.AssociatedMembershipType)
                             .ToList()
                             .Select(Mapper.Map<Customer, CustomerDto>));
-          
-        }
 
         public IHttpActionResult GetCustomer(int id)
         {

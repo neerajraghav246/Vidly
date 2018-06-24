@@ -26,7 +26,7 @@ namespace Vidly.DTO
         [Range(1, 20)]
         public short NumberInStock { get; set; }
 
-
+        public GenereDto AssociatedGenere { get; set; }
         [Display(Name = "Genere")]
         [Required]
         public byte GenereId { get; set; }
