@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Vidly.Models;
 using System.Data.Entity;
 using Vidly.ViewModels;
+using System.Web.UI;
 
 namespace Vidly.Controllers
 {
@@ -55,6 +56,7 @@ namespace Vidly.Controllers
 
 
         // GET: Customers/Edit/5
+        [OutputCache(Duration =50,Location =OutputCacheLocation.Server,VaryByParam ="id")]
         public ActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(x => x.Id == id);

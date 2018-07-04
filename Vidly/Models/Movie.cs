@@ -24,8 +24,10 @@ namespace Vidly.Models
         [Required]
         [Display(Name = "Stock")]
         [Range(1,20)]
-        public short NumberInStock { get; set; }       
-        
+        public short NumberInStock { get; set; }
+
+        public short NumberAvailable { get; set; }
+
         public Genere AssociatedGenere { get; set; }
 
         [Display(Name = "Genere")]

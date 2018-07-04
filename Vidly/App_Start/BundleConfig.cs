@@ -26,6 +26,9 @@ namespace Vidly
                       "~/Content/bootstrap.css",
                       "~/Content/DataTables/css/dataTables.bootstrap4.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/customers").Include("~/Scripts/app/customer_index.js"));
+            bundles.Add(new ScriptBundle("~/bundles/main").Include("~/Scripts/app/main.js"));
+
         }
     }
 }

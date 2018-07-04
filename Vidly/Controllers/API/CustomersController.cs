@@ -19,11 +19,23 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-       // [HttpGet]
-        public IHttpActionResult GetCustomers() => Ok(_context.Customers
-                            .Include(c => c.AssociatedMembershipType)
-                            .ToList()
-                            .Select(Mapper.Map<Customer, CustomerDto>));
+        // [HttpGet]
+        public IHttpActionResult GetCustomers()
+        {
+            return Ok(_context.Customers
+                                .Include(c => c.AssociatedMembershipType)
+                                .ToList()
+                                .Select(Mapper.Map<Customer, CustomerDto>));
+
+            //if (MemoryCache.Default[MemoryCacheConstants.customers] == null)
+            //{
+            //    MemoryCache.Default[MemoryCacheConstants.customers] = _context.Customers
+            //                    .Include(c => c.AssociatedMembershipType)
+            //                    .ToList()
+            //                    .Select(Mapper.Map<Customer, CustomerDto>);
+            //}
+            //return Ok(MemoryCache.Default[MemoryCacheConstants.customers] as IEnumerable<CustomerDto>);
+        }
 
         public IHttpActionResult GetCustomer(int id)
         {
@@ -127,17 +139,17 @@ namespace Vidly.Controllers.API
         [HttpDelete]
         public IHttpActionResult DeleteCustomer(int id)
         {
-           
-                var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
-                if (customerInDB == null)
+
+            var customerInDB = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customerInDB == null)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
-                    {
-                        Content = new StringContent($"Customer not found with ID={id} in our database"),
-                        ReasonPhrase = "Customer Not Found"
-                    };
-                    throw new HttpResponseException(response);
-                }
+                    Content = new StringContent($"Customer not found with ID={id} in our database"),
+                    ReasonPhrase = "Customer Not Found"
+                };
+                throw new HttpResponseException(response);
+            }
             try
             {
                 _context.Customers.Remove(customerInDB);
