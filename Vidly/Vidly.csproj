@@ -238,6 +238,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="DTO\CustomerDto.cs" />
     <Compile Include="DTO\GenereDto.cs" />
     <Compile Include="DTO\MembershipTypeDto.cs" />
@@ -328,6 +329,14 @@
     <Compile Include="Migrations\201807041624038_AddNumberAvailableToMovie.cs" />
     <Compile Include="Migrations\201807041624038_AddNumberAvailableToMovie.Designer.cs">
       <DependentUpon>201807041624038_AddNumberAvailableToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071249427_RemoveRentals.cs" />
+    <Compile Include="Migrations\201807071249427_RemoveRentals.Designer.cs">
+      <DependentUpon>201807071249427_RemoveRentals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071253446_AddRentalsAgain.cs" />
+    <Compile Include="Migrations\201807071253446_AddRentalsAgain.Designer.cs">
+      <DependentUpon>201807071253446_AddRentalsAgain.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -523,6 +532,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -534,6 +544,8 @@
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\movie_index_readOnly.js" />
     <Content Include="Scripts\app\movie_index.js" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -655,6 +667,10 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -716,6 +732,7 @@
     <Content Include="Views\Movies\_MovieForm.cshtml" />
     <Content Include="Views\Shared\_ConfirmModal.cshtml" />
     <Content Include="Views\Movies\Index_ReadOnly.cshtml" />
+    <Content Include="Views\Rentals\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -791,6 +808,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807041624038_AddNumberAvailableToMovie.resx">
       <DependentUpon>201807041624038_AddNumberAvailableToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071249427_RemoveRentals.resx">
+      <DependentUpon>201807071249427_RemoveRentals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071253446_AddRentalsAgain.resx">
+      <DependentUpon>201807071253446_AddRentalsAgain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

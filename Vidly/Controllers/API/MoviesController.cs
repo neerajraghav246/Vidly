@@ -19,7 +19,15 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        public IHttpActionResult GetMovies() => Ok(_context.Movies.Include(m=>m.AssociatedGenere).ToList().Select(Mapper.Map<Movie, MovieDto>));
+        public IHttpActionResult GetMovies(string query = null)
+        {
+            var moviesQuery = _context.Movies.Include(m => m.AssociatedGenere).Where(movie => movie.NumberAvailable > 0);
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                moviesQuery = moviesQuery.Where(movie => movie.Name.Contains(query));
+            }
+            return Ok(moviesQuery.ToList().Select(Mapper.Map<Movie, MovieDto>));
+        }
 
         public IHttpActionResult GetMovie(int id)
         {
@@ -125,17 +133,17 @@ namespace Vidly.Controllers.API
         [Authorize(Roles = RoleName.CanManageMovies)]
         public IHttpActionResult DeleteMovie(int id)
         {
-           
-                var movieInDB = _context.Movies.SingleOrDefault(c => c.Id == id);
-                if (movieInDB == null)
+
+            var movieInDB = _context.Movies.SingleOrDefault(c => c.Id == id);
+            if (movieInDB == null)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
-                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
-                    {
-                        Content = new StringContent($"Movie not found with ID={id} in our database"),
-                        ReasonPhrase = "Movie Not Found"
-                    };
-                    throw new HttpResponseException(response);
-                }
+                    Content = new StringContent($"Movie not found with ID={id} in our database"),
+                    ReasonPhrase = "Movie Not Found"
+                };
+                throw new HttpResponseException(response);
+            }
             try
             {
                 _context.Movies.Remove(movieInDB);
