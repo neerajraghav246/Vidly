@@ -14,7 +14,8 @@ namespace Vidly
                         "~/Scripts/DataTables/jquery.dataTables.js",
                         "~/Scripts/DataTables/dataTables.bootstrap4.js",
                         "~/Scripts/typeahead.bundle.js",
-                        "~/Scripts/bloodhound.js"));
+                        "~/Scripts/bloodhound.js",
+                        "~/Scripts/toastr.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -28,10 +29,15 @@ namespace Vidly
                       "~/Content/bootstrap.css",
                       "~/Content/DataTables/css/dataTables.bootstrap4.css",
                       "~/Content/typeahead.css",
+                      "~/Content/toastr.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/bundles/customers").Include("~/Scripts/app/customer_index.js"));
             bundles.Add(new ScriptBundle("~/bundles/main").Include("~/Scripts/app/main.js"));
 
+          //  if (HttpContext.Current.IsDebuggingEnabled)
+              //  BundleTable.EnableOptimizations = false;
+            //else
+                BundleTable.EnableOptimizations = true;
         }
     }
 }
